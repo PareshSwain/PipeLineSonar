@@ -53,7 +53,7 @@ stage('Deploy') {
                 echo 'deploying....'
 		withMaven(jdk: 'JDK1.8', maven: 'MAVEN') {
     		// some block
-        	bat "mvn -Dmaven.test.failure.ignore=true deploy"
+        	//bat "mvn -Dmaven.test.failure.ignore=true deploy"
         	}
 		}
 		}
@@ -62,8 +62,11 @@ stage('Deploy') {
             steps {
                 echo 'sonar....'
 		withMaven(jdk: 'JDK1.8', maven: 'MAVEN') {
+		// Get the SonarQube name from SonarQube installations and check configuration page
+		withSonarQubeEnv('SonarQube') {
     		// some block
         	bat "mvn -Dmaven.test.failure.ignore=true sonar:sonar"
+		}
         	}
 		}
 		}
